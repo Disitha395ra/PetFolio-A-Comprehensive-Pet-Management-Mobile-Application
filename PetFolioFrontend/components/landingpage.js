@@ -9,7 +9,7 @@ export default function LandingPage() {
       <PaperProvider>
         <View>
           <Image
-            source={require("../assets/icon.png")}
+            source={require("../assets/landing.gif")}
             style={{ width: "100%", height: "100%" }}
           />
         </View>
