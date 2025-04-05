@@ -66,15 +66,16 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f4ded3",
+    backgroundColor: "#aebbf8",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start", // push everything to top
     paddingHorizontal: 30,
+    paddingTop: 60, // controls how high the content appears
   },
   image: {
-    width: 200,
-    height: 200,
-    marginBottom: 20,
+    width: 250,
+    height: 250,
+    marginBottom: 18,
   },
   title: {
     fontSize: 28,
