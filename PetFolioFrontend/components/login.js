@@ -12,8 +12,10 @@ import {
 import { PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Login() {
+  const navigation = useNavigation();
   let [fontsLoaded] = useFonts({
     "outfit-bold": require("../assets/fonts/Outfit-Bold.ttf"),
     "outfit-regular": require("../assets/fonts/Outfit-Regular.ttf"),
@@ -30,7 +32,7 @@ export default function Login() {
           style={styles.container}
         >
           <Image
-            source={require("../assets/login.gif")} 
+            source={require("../assets/bgremove.png")}
             style={styles.image}
             resizeMode="contain"
           />
@@ -55,7 +57,10 @@ export default function Login() {
           </TouchableOpacity>
 
           <Text style={styles.footerText}>
-            Don’t have an account? <Text style={styles.signup}>Sign up</Text>
+            Don’t have an account?{" "}
+            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+              <Text style={styles.signup}>Sign up</Text>
+            </TouchableOpacity>
           </Text>
         </KeyboardAvoidingView>
       </PaperProvider>
@@ -68,9 +73,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#aebbf8",
     alignItems: "center",
-    justifyContent: "flex-start", // push everything to top
+    justifyContent: "flex-start",
     paddingHorizontal: 30,
-    paddingTop: 60, // controls how high the content appears
+    paddingTop: 100,
   },
   image: {
     width: 250,

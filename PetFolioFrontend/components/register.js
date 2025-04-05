@@ -12,8 +12,10 @@ import {
 import { PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Register() {
+  const navigation = useNavigation();
   let [fontsLoaded] = useFonts({
     "outfit-bold": require("../assets/fonts/Outfit-Bold.ttf"),
     "outfit-regular": require("../assets/fonts/Outfit-Regular.ttf"),
@@ -30,12 +32,12 @@ export default function Register() {
           style={styles.container}
         >
           <Image
-            source={require("../assets/login.gif")} // Use a relevant GIF or image
+            source={require("../assets/bgremove.png")} // Use your own register image or reuse login.gif
             style={styles.image}
             resizeMode="contain"
           />
           <Text style={styles.title}>Create Account</Text>
-          <Text style={styles.subtitle}>Join us to get started</Text>
+          <Text style={styles.subtitle}>Sign up to get started</Text>
 
           <TextInput
             style={styles.input}
@@ -61,12 +63,15 @@ export default function Register() {
             secureTextEntry
           />
 
-          <TouchableOpacity style={styles.registerButton}>
-            <Text style={styles.registerText}>Register</Text>
+          <TouchableOpacity style={styles.loginButton}>
+            <Text style={styles.loginText}>Sign Up</Text>
           </TouchableOpacity>
 
           <Text style={styles.footerText}>
-            Already have an account? <Text style={styles.loginLink}>Login</Text>
+            Already have an account?{" "}
+            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+              <Text style={styles.signup}>Login</Text>
+            </TouchableOpacity>
           </Text>
         </KeyboardAvoidingView>
       </PaperProvider>
@@ -79,8 +84,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#aebbf8",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     paddingHorizontal: 30,
+    paddingTop: 60,
   },
   image: {
     width: 250,
@@ -114,7 +120,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 2,
   },
-  registerButton: {
+  loginButton: {
     backgroundColor: "#3b2a2a",
     paddingVertical: 15,
     width: "100%",
@@ -122,7 +128,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
-  registerText: {
+  loginText: {
     color: "#fff",
     fontSize: 16,
     fontFamily: "outfit-bold",
@@ -133,7 +139,7 @@ const styles = StyleSheet.create({
     fontFamily: "outfit-regular",
     color: "#3b2a2a",
   },
-  loginLink: {
+  signup: {
     fontFamily: "outfit-bold",
     color: "#b25e5e",
   },
