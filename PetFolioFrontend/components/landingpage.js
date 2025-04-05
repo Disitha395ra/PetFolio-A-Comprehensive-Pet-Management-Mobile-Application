@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { useFonts } from "expo-font";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 export default function LandingPage() {
     let [fontsLoaded] = useFonts({
@@ -10,6 +12,15 @@ export default function LandingPage() {
       "outfit-regular": require("../assets/fonts/Outfit-Regular.ttf"),
       "outfit-light": require("../assets/fonts/Outfit-Light.ttf"),
     });
+    useEffect(() => {
+      if (fontsLoaded) {
+        const timer = setTimeout(() => {
+          navigation.navigate("Login"); 
+        }, 5000);
+
+        return () => clearTimeout(timer);
+      }
+    }, [fontsLoaded, navigation]);
     if (!fontsLoaded) {
       return null; 
     }
@@ -25,6 +36,11 @@ export default function LandingPage() {
             source={require("../assets/landing.gif")}
             style={styles.gifImage}
             resizeMode="contain" // This ensures the gif maintains its aspect ratio
+          />
+          <ActivityIndicator
+            animating={true}
+            color={MD2Colors.red800}
+            size="large"
           />
           <Text style={styles.bannertextsub}>
             Manage your pet's needs and stay connected, all in one place
@@ -67,7 +83,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: "10%", // Positioning text at the bottom but not too close to the edge
     width: "80%", // Make sure it doesn't stretch beyond the screen width
-    fontFamily: "outfit-light",
+    fontFamily: "outfit-regular",
   },
   underbannertext: {
     fontSize: 20,
@@ -78,6 +94,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "253", // Positioning text at the top but not too close to the edge
     width: "80%", // Make sure it doesn't stretch beyond the screen width
-    fontFamily: "outfit-regular",
+    fontFamily: "outfit-light",
   },
 });
