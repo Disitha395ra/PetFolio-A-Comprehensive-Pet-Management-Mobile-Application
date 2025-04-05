@@ -2,8 +2,17 @@ import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
 import { StyleSheet, Text, View, Image } from "react-native";
+import { useFonts } from "expo-font";
 
 export default function LandingPage() {
+    let [fontsLoaded] = useFonts({
+      "outfit-bold": require("../assets/fonts/Outfit-Bold.ttf"),
+      "outfit-regular": require("../assets/fonts/Outfit-Regular.ttf"),
+      "outfit-light": require("../assets/fonts/Outfit-Light.ttf"),
+    });
+    if (!fontsLoaded) {
+      return null; 
+    }
   return (
     <SafeAreaProvider>
       <PaperProvider>
@@ -38,21 +47,23 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 30, // Spacing between the text and gif
     position: "absolute",
-    top: "20%", // Positioning text at the top but not too close to the edge
+    top: "15%", // Positioning text at the top but not too close to the edge
     width: "80%", // Make sure it doesn't stretch beyond the screen width
+    fontFamily: "outfit-bold",
   },
   gifImage: {
     width: "100%",
     height: 230,
     borderRadius: 20,
   },
-  bannertextsub:{
+  bannertextsub: {
     fontSize: 18,
     color: "#3b2a2a",
     textAlign: "center",
     marginTop: 10, // Spacing between the gif and the subtext
     position: "absolute",
-    bottom: "10%", // Positioning text at the bottom but not too close to the edge
+    bottom: "18%", // Positioning text at the bottom but not too close to the edge
     width: "80%", // Make sure it doesn't stretch beyond the screen width
-  }
+    fontFamily: "outfit-regular",
+  },
 });
