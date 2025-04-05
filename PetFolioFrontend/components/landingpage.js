@@ -18,6 +18,9 @@ export default function LandingPage() {
       <PaperProvider>
         <View style={styles.container}>
           <Text style={styles.bannertext}>Welcome to the PetFolio</Text>
+          <Text style={styles.underbannertext}>
+            {"{ Happy pets, happy life }"}
+          </Text>
           <Image
             source={require("../assets/landing.gif")}
             style={styles.gifImage}
@@ -62,7 +65,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 10, // Spacing between the gif and the subtext
     position: "absolute",
-    bottom: "18%", // Positioning text at the bottom but not too close to the edge
+    bottom: "10%", // Positioning text at the bottom but not too close to the edge
+    width: "80%", // Make sure it doesn't stretch beyond the screen width
+    fontFamily: "outfit-light",
+  },
+  underbannertext: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#3b2a2a",
+    textAlign: "center",
+    marginBottom: 10, // Spacing between the text and gif
+    position: "absolute",
+    top: "253", // Positioning text at the top but not too close to the edge
     width: "80%", // Make sure it doesn't stretch beyond the screen width
     fontFamily: "outfit-regular",
   },
