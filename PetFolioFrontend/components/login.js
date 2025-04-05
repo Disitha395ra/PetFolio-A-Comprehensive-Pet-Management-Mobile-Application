@@ -2,25 +2,25 @@ import { PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { useFonts } from "expo-font";
-export default function LoginPage(){
-    let [fontsLoaded] = useFonts({
-          "outfit-bold": require("../assets/fonts/Outfit-Bold.ttf"),
-          "outfit-regular": require("../assets/fonts/Outfit-Regular.ttf"),
-          "outfit-light": require("../assets/fonts/Outfit-Light.ttf"),
-        });
-        if (!fontsLoaded) {
-          return null; 
-        }
-    return(
-        <SafeAreaProvider>
-            <PaperProvider>
-                <View>
-                    <Text style={styles.header}>Welcome</Text>
-                    <Text style={styles.headersub}>Login to continue..</Text>
-                </View>
-            </PaperProvider>
-        </SafeAreaProvider>
-    )
+export default function Login() {
+  let [fontsLoaded] = useFonts({
+    "outfit-bold": require("../assets/fonts/Outfit-Bold.ttf"),
+    "outfit-regular": require("../assets/fonts/Outfit-Regular.ttf"),
+    "outfit-light": require("../assets/fonts/Outfit-Light.ttf"),
+  });
+  if (!fontsLoaded) {
+    return null;
+  }
+  return (
+    <SafeAreaProvider>
+      <PaperProvider>
+        <View>
+          <Text style={styles.header}>Welcome</Text>
+          <Text style={styles.headersub}>Login to continue..</Text>
+        </View>
+      </PaperProvider>
+    </SafeAreaProvider>
+  );
 }
 const styles = StyleSheet.create({
   header: {

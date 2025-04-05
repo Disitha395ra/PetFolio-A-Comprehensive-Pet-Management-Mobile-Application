@@ -6,7 +6,9 @@ import { useFonts } from "expo-font";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
+
 export default function LandingPage() {
+    const navigation = useNavigation();
     let [fontsLoaded] = useFonts({
       "outfit-bold": require("../assets/fonts/Outfit-Bold.ttf"),
       "outfit-regular": require("../assets/fonts/Outfit-Regular.ttf"),
