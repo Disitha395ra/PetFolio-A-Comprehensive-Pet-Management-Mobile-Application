@@ -13,9 +13,17 @@ import { PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
+import {useState} from "react";
 
 export default function Register() {
   const navigation = useNavigation();
+
+  const [username, setusername] = useState("");
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
+  const [confirmPassword, setconfirmPassword] = useState("");
+
+
   let [fontsLoaded] = useFonts({
     "outfit-bold": require("../assets/fonts/Outfit-Bold.ttf"),
     "outfit-regular": require("../assets/fonts/Outfit-Regular.ttf"),
@@ -41,25 +49,33 @@ export default function Register() {
 
           <TextInput
             style={styles.input}
-            placeholder="Full Name"
+            placeholder="User Name"
             placeholderTextColor="#8e7c7c"
+            value={username}
+            onChangeText={setusername}
           />
           <TextInput
             style={styles.input}
             placeholder="Email"
             placeholderTextColor="#8e7c7c"
             keyboardType="email-address"
+            value={email}
+            onChangeText={setemail}
           />
           <TextInput
             style={styles.input}
             placeholder="Password"
             placeholderTextColor="#8e7c7c"
+            value={password}
+            onChangeText={setpassword}
             secureTextEntry
           />
           <TextInput
             style={styles.input}
             placeholder="Confirm Password"
             placeholderTextColor="#8e7c7c"
+            value={confirmPassword}
+            onChangeText={setconfirmPassword}
             secureTextEntry
           />
 
