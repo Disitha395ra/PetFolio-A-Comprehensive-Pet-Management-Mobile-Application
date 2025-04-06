@@ -79,7 +79,7 @@ export default function Register() {
             secureTextEntry
           />
 
-          <TouchableOpacity style={styles.loginButton}>
+          <TouchableOpacity style={styles.loginButton} onPress={handlesginup}>
             <Text style={styles.loginText}>Sign Up</Text>
           </TouchableOpacity>
 
