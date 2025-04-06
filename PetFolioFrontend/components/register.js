@@ -33,10 +33,10 @@ export default function Register() {
   if (!fontsLoaded) return null;
 
   const handlesginup = () => {
-    if(!username || !email || !password || !confirmpassword){
+    if (!username || !email || !password || !confirmPassword) {
       alert("Please fill all fields");
     }
-    if(password !== confirmPassword){
+    if (password !== confirmPassword) {
       alert("Password do not match");
     }
     fetch("http://localhost:8080/api/auth/register",{
