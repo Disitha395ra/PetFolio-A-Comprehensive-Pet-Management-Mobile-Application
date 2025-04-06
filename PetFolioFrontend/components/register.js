@@ -32,6 +32,15 @@ export default function Register() {
 
   if (!fontsLoaded) return null;
 
+  const handlesginup = () => {
+    if(!username || !email || !password || !confirmpassword){
+      alert("Please fill all fields");
+    }
+    if(password !== confirmPassword){
+      alert("Password do not match");
+    }
+  }
+
   return (
     <SafeAreaProvider>
       <PaperProvider>
