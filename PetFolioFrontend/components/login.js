@@ -13,6 +13,7 @@ import { PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -21,8 +22,38 @@ export default function Login() {
     "outfit-regular": require("../assets/fonts/Outfit-Regular.ttf"),
     "outfit-light": require("../assets/fonts/Outfit-Light.ttf"),
   });
-
   if (!fontsLoaded) return null;
+
+    const [email, setemail] = useState("");
+    const [password, setpassword] = useState("");
+
+    const handlelogin = () =>{
+      if(!email || !password){
+        alert("Please fill all fields");
+      }
+      fetch("http://localhost:8080/api/auth/login",{
+        method:"POST",
+        headers:{
+          "content-type":"applicaton/json",
+        },
+        body:JSON.stringify({
+          email,
+          password,
+        }),
+      })
+      .then((res)=>{
+        if(res.ok){
+          alert("Login successfully");
+          navigation.navigate("Home");
+        }else{
+          alert("Invalid credentials")
+        }
+      })
+      .catch((err)=>{
+        console.log(err);
+        alert("Error logging in")
+      })
+    }
 
   return (
     <SafeAreaProvider>
@@ -44,15 +75,19 @@ export default function Login() {
             placeholder="Email"
             placeholderTextColor="#8e7c7c"
             keyboardType="email-address"
+            value={email}
+            onChangeText={setemail}
           />
           <TextInput
             style={styles.input}
             placeholder="Password"
             placeholderTextColor="#8e7c7c"
             secureTextEntry
+            value={password}
+            onChangeText={setpassword}
           />
 
-          <TouchableOpacity style={styles.loginButton}>
+          <TouchableOpacity style={styles.loginButton} onPress={handlelogin}>
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
 
