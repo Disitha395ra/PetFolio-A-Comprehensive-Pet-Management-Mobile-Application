@@ -39,29 +39,29 @@ export default function Register() {
     if (password !== confirmPassword) {
       alert("Password do not match");
     }
-    fetch("http://localhost:8080/api/auth/register",{
-      method:"POST",
-      headers:{
-        "content-type":"application/json",
-      },
-      body:JSON.stringify({
+    fetch("http://localhost:8080/api/auth/register", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      }, //tells the server we're sending JSON.
+      body: JSON.stringify({//stringify converts a JavaScript object into a JSON string.
         username,
         email,
         password,
       }),
     })
-    .then((res)=>{
-      if(res.ok){
-        alert("Account created successfully");
-        navigation.navigate("Login");
-      }else{
-        alert("Error creating account");
-      }
-    })
-    .catch((err)=>{
-      alert("Something went wrong. Please try again later");
-      console.log(err);
-    });
+      .then((res) => {
+        if (res.ok) {
+          alert("Account created successfully");
+          navigation.navigate("Login");
+        } else {
+          alert("Error creating account");
+        }
+      })
+      .catch((err) => {
+        alert("Something went wrong. Please try again later");
+        console.log(err);
+      });
   }
 
   return (
