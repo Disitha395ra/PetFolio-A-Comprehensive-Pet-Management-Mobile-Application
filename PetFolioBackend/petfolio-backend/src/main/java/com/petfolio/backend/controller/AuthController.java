@@ -42,5 +42,30 @@ public class AuthController {
 			return "User Registration Error"+e.getMessage();
 		}
 	}
+	
+	@PostMapping("/login")
+	public String loginuser(@RequestBody User user) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+	        String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+	        
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	        stmt.setString(1, user.getEmail());
+	        stmt.setString(2, user.getPassword());
+	        
+	        var resultSet = stmt.executeQuery();
+	        
+	        if (resultSet.next()) {
+	            return "Login successful";
+	        } else {
+	            return "Invalid email or password";
+	        }
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "User login error"+e.getMessage();
+		}
+		
+	}
 
 }
