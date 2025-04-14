@@ -2,10 +2,10 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
-import HomeScreen from "../pages/Home";
-import CareScreen from "../pages/Care";
-import HistoryScreen from "../pages/History";
-import ProfileScreen from "../pages/Profile";
+import Home from "../pages/Home";
+import Care from "../pages/Care";
+import History from "../pages/History";
+import Profile from "../pages/Profile";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,10 +33,10 @@ const Tabbar = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Care" component={CareScreen} />
-      <Tab.Screen name="History" component={HistoryScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Care" component={Care} />
+      <Tab.Screen name="History" component={History} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 };

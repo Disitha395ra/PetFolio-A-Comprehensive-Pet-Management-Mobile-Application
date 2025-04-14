@@ -44,7 +44,7 @@ export default function Login() {
       .then((res) => {
         if (res.ok) {
           alert("Login successfully");
-          navigation.navigate("Home");
+          navigation.navigate("Tabnavigator");
         } else {
           alert("Invalid credentials");
         }
