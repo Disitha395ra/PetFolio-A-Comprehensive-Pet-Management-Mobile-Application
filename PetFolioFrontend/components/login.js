@@ -14,9 +14,12 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 export default function Login() {
   const navigation = useNavigation();
+  const {setUser} = useContext(UserContext);
   let [fontsLoaded] = useFonts({
     "outfit-bold": require("../assets/fonts/Outfit-Bold.ttf"),
     "outfit-regular": require("../assets/fonts/Outfit-Regular.ttf"),
@@ -30,20 +33,23 @@ export default function Login() {
   const handlelogin = () => {
     if (!email || !password) {
       alert("Please fill all fields");
+      return;
     }
     fetch("http://localhost:8080/api/auth/login", {
       method: "POST",
       headers: {
-        "content-Type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email,
         password,
       }),
     })
-      .then((res) => {
-        if (res.ok) {
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.user) {
           alert("Login successfully");
+          setUser(data.user); // store user globally
           navigation.navigate("Tabnavigator");
         } else {
           alert("Invalid credentials");
