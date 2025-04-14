@@ -5,6 +5,9 @@ import Login from './components/login';
 import Register from './components/register';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import Tabnavigator from './components/tabbar';
+
+
 export default function App() {
 const Stack = createStackNavigator();
   return (
@@ -23,6 +26,11 @@ const Stack = createStackNavigator();
         <Stack.Screen
           name="Register"
           component={Register}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Tabnavigator"
+          component={Tabnavigator}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
