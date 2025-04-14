@@ -3,12 +3,17 @@ package com.petfolio.backend.controller;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.http.HttpStatus;
 
 
 import com.petfolio.backend.model.User;
@@ -44,9 +49,9 @@ public class AuthController {
 	}
 	
 	@PostMapping("/login")
-	public String loginuser(@RequestBody User user) {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+	public ResponseEntity<?> loginuser(@RequestBody User user) {
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
 	        Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
 	        String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
 	        
@@ -57,15 +62,28 @@ public class AuthController {
 	        var resultSet = stmt.executeQuery();
 	        
 	        if (resultSet.next()) {
-	            return "Login successful";
+	            // Create a JSON-style response
+	            Map<String, Object> response = new HashMap<>();
+	            response.put("status", "success");
+	            response.put("username", resultSet.getString("username"));
+	            response.put("email", resultSet.getString("email"));
+
+	            return ResponseEntity.ok(response); // ✅ returns JSON
 	        } else {
-	            return "Invalid email or password";
+	            Map<String, Object> response = new HashMap<>();
+	            response.put("status", "error");
+	            response.put("message", "Invalid email or password");
+
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 	        }
-		}catch(Exception e) {
-			e.printStackTrace();
-			return "User login error"+e.getMessage();
-		}
-		
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        Map<String, Object> response = new HashMap<>();
+	        response.put("status", "error");
+	        response.put("message", "User login error: " + e.getMessage());
+
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
 	}
 
 }
