@@ -46,10 +46,12 @@ export default function Login() {
       }),
     })
       .then((res) => res.json())
+      
       .then((data) => {
-        if (data && data.user) {
+        console.log(data);
+        if (data && data.username) {
           alert("Login successfully");
-          setUser(data.user); // store user globally
+          setUser(data.username); // store user globally
           navigation.navigate("Tabnavigator");
         } else {
           alert("Invalid credentials");
