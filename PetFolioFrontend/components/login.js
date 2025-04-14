@@ -24,36 +24,36 @@ export default function Login() {
   });
   if (!fontsLoaded) return null;
 
-    const [email, setemail] = useState("");
-    const [password, setpassword] = useState("");
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
 
-    const handlelogin = () =>{
-      if(!email || !password){
-        alert("Please fill all fields");
-      }
-      fetch("http://localhost:8080/api/auth/login",{
-        method:"POST",
-        headers:{
-          "content-type":"applicaton/json",
-        },
-        body:JSON.stringify({
-          email,
-          password,
-        }),
-      })
-      .then((res)=>{
-        if(res.ok){
+  const handlelogin = () => {
+    if (!email || !password) {
+      alert("Please fill all fields");
+    }
+    fetch("http://localhost:8080/api/auth/login", {
+      method: "POST",
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
           alert("Login successfully");
           navigation.navigate("Home");
-        }else{
-          alert("Invalid credentials")
+        } else {
+          alert("Invalid credentials");
         }
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.log(err);
-        alert("Error logging in")
-      })
-    }
+        alert("Error logging in");
+      });
+  };
 
   return (
     <SafeAreaProvider>
