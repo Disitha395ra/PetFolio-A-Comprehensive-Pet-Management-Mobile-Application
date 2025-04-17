@@ -26,7 +26,7 @@ const customTheme = {
 export default function Profile() {
   const { user, setUser } = useContext(UserContext);
   const [profile, setProfile] = useState(null);
-  const [upusername, setupusername] = useState("");
+  const [upusername, setupusername] = useState(profile?.username);
   const [upemail, setupemail] = useState("");
   const [uppassword, setuppassword] = useState("");
   const [uppasswordconfirm, setuppasswordconfirm] = useState("");
@@ -82,7 +82,7 @@ export default function Profile() {
   };
 
   const handleSavedata = () => {
-    if(!upusername || !upemail || !uppassword || !uppasswordconfirm){
+    if( !upemail || !uppassword || !uppasswordconfirm){
       alert("Please fill all the fields");
     }
     if(uppassword !== uppasswordconfirm){
@@ -135,6 +135,7 @@ export default function Profile() {
               label="Username"
               value={upusername}
               onChangeText={setupusername}
+              editable={false}
               mode="outlined"
               style={styles.input}
               theme={customTheme}
