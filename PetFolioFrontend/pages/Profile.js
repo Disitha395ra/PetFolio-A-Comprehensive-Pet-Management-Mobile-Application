@@ -26,7 +26,7 @@ const customTheme = {
 export default function Profile() {
   const { user, setUser } = useContext(UserContext);
   const [profile, setProfile] = useState(null);
-  const [upusername, setupusername] = useState(profile?.username);
+  const [upusername, setupusername] = useState("");
   const [upemail, setupemail] = useState("");
   const [uppassword, setuppassword] = useState("");
   const [uppasswordconfirm, setuppasswordconfirm] = useState("");
@@ -49,6 +49,12 @@ export default function Profile() {
       .then((data) => setProfile(data))
       .catch((err) => console.log("Error loading profile:", err));
   }, [user]);
+
+  useEffect(() => {
+    if (profile) {
+      setupusername(profile.username);
+    }
+  }, [profile]);
 
   if (!profile) {
     return (
@@ -82,12 +88,15 @@ export default function Profile() {
   };
 
   const handleSavedata = () => {
-    if( !upemail || !uppassword || !uppasswordconfirm){
+    if (!upemail || !uppassword || !uppasswordconfirm) {
       alert("Please fill all the fields");
+      return;
     }
-    if(uppassword !== uppasswordconfirm){
-      alert("Password do not match");
+    if (uppassword !== uppasswordconfirm) {
+      alert("Passwords do not match");
+      return;
     }
+
     fetch("http://localhost:8080/api/user/update", {
       method: "POST",
       headers: {
@@ -223,9 +232,17 @@ const styles = StyleSheet.create({
     color: "#3b2a2a",
     marginBottom: 10,
   },
+  subtitle: {
+    fontSize: 16,
+    fontFamily: "outfit-light",
+    color: "#3b2a2a",
+    marginTop: 5,
+    marginBottom:5,
+  },
   form: {
     width: "100%",
     marginBottom: 20,
+    marginTop: 10,
   },
   input: {
     marginBottom: 12,
@@ -238,15 +255,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   logoutButton: {
-    marginTop: 40,
+    marginTop: 35,
     width: "100%",
     borderRadius: 30,
     backgroundColor: "#dc143c",
-  },
-  subtitle: {
-    fontSize: 16,
-    fontFamily: "outfit-light",
-    color: "#3b2a2a",
-    marginTop: 5,
   },
 });
