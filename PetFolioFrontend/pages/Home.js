@@ -6,6 +6,7 @@ import { useFonts } from "expo-font";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import { Avatar } from "react-native-paper";
+import { Card, Button } from "react-native-paper";
 
 export default function Home() {
   const { user, setUser } = useContext(UserContext);
@@ -27,8 +28,23 @@ export default function Home() {
             <Text style={styles.welcomeText}>Hello, {user || "Guest"} 👋</Text>
             <Text style={styles.subtitle}>Welcome to petfolio</Text>
           </View>
+          <View>
+            <Card>
+              <Card.Title
+                title="Card Title"
+              />
+              <Card.Cover
+                source={{
+                  uri: "https://picsum.photos/700",
+                }}
+              />
+              <Card.Actions>
+                <Button>Delete Pet</Button>
+              </Card.Actions>
+            </Card>
+          </View>
 
-          <TouchableOpacity style={styles.addButton} >
+          <TouchableOpacity style={styles.addButton}>
             <Avatar.Icon size={45} icon="plus" />
           </TouchableOpacity>
         </View>
