@@ -107,10 +107,19 @@ export default function Home() {
               <Text style={styles.subtitle}>Fetching your pets...</Text>
             </View>
           ) : pets.length === 0 ? (
-            <Image
-              source={require("../assets/loading.gif")}
-              style={styles.loadingGif}
-            />
+            
+            <View>
+              <Text style={styles.subtitle}>No pets found.</Text>
+              <Image
+                source={require("../assets/loading.gif")}
+                style={styles.loadingGif}
+                resizeMode="contain"
+              />
+              <Text style={styles.subtitle}>
+                Add a new pet by clicking the button below.</Text>
+            </View>
+            
+            
           ) : (
             <ScrollView style={{ width: "100%" }}>
               {pets.map((pet) => (
