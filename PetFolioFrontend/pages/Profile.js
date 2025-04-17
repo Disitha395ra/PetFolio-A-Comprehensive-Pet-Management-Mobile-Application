@@ -82,7 +82,35 @@ export default function Profile() {
   };
 
   const handleSavedata = () => {
-    alert("Profile Update", "This function is under development.");
+    if(!upusername || !upemail || !uppassword || !uppasswordconfirm){
+      alert("Please fill all the fields");
+    }
+    if(uppassword !== uppasswordconfirm){
+      alert("Password do not match");
+    }
+    fetch("http://localhost:8080/api/user/update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: upusername,
+        email: upemail,
+        password: uppassword,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          alert("Account Updated successfully");
+          navigation.navigate("Login");
+        } else {
+          alert("Error updating account");
+        }
+      })
+      .catch((err) => {
+        alert("Something went wrong. Please try again later");
+        console.log(err);
+      });
   };
 
   return (
