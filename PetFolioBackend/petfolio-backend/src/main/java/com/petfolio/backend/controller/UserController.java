@@ -54,5 +54,37 @@ public class UserController {
 		}
 	}
 	
+	@PostMapping("/update")
+	public ResponseEntity<?> updateUserProfile(@RequestBody Map<String, String> body){
+		String username = body.get("username");
+		String email = body.get("email");
+		String password = body.get("password");
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+	        
+	        String sql = "UPDATE users SET email = ?, password = ? WHERE username = ?";
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	        stmt.setString(1, email);
+	        stmt.setString(2, password);
+	        stmt.setString(3, username);
+
+	        int rowsUpdated = stmt.executeUpdate();
+
+	        if (rowsUpdated > 0) {
+	            Map<String, Object> response = new HashMap<>();
+	            response.put("message", "User profile updated successfully");
+	            return ResponseEntity.ok(response);
+	        } else {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+	        }
+	        
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+		}
+	}
+	
 	
 }
