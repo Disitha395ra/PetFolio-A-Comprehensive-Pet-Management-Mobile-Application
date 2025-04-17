@@ -39,7 +39,7 @@ export default function Home() {
 
    const showModal = () => setVisible(true);
    const hideModal = () => setVisible(false);
-   const containerStyle = { backgroundColor: "white", padding: 20 };
+   const containerStyle = { backgroundColor: "#ffe4e1", padding: 20, margin: 20 };
 
   return (
     <SafeAreaProvider>
@@ -83,6 +83,10 @@ export default function Home() {
               onDismiss={hideModal}
               contentContainerStyle={containerStyle}
             >
+              <View>
+                <Text style={styles.welcomeText}>Add a new pet</Text>
+                <Text style={styles.subtitle}>Fill in the details below</Text>
+              </View>
               <Text>Example Modal. Click outside this area to dismiss.</Text>
             </Modal>
           </Portal>
