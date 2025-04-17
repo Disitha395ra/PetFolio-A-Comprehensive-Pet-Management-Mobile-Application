@@ -1,13 +1,30 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { PaperProvider, Avatar, Button, TextInput } from "react-native-paper";
+import {
+  PaperProvider,
+  Avatar,
+  Button,
+  TextInput,
+  DefaultTheme,
+} from "react-native-paper";
 import { useFonts } from "expo-font";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
 
+const customTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "#3b2a2a",
+    background: "#ffffff",
+    text: "#3b2a2a",
+    placeholder: "#7a7a7a",
+  },
+};
+
 export default function Profile() {
-  const { user, setUser } = useContext(UserContext); // <-- destructure both here
+  const { user, setUser } = useContext(UserContext);
   const [profile, setProfile] = useState(null);
   const [upusername, setupusername] = useState("");
   const [upemail, setupemail] = useState("");
@@ -36,7 +53,7 @@ export default function Profile() {
   if (!profile) {
     return (
       <SafeAreaProvider>
-        <PaperProvider>
+        <PaperProvider theme={customTheme}>
           <View style={styles.container}>
             <Text>Loading...</Text>
           </View>
@@ -55,7 +72,7 @@ export default function Profile() {
           text: "Logout",
           style: "destructive",
           onPress: () => {
-            setUser(null); // now defined!
+            setUser(null);
             navigation.navigate("Login");
           },
         },
@@ -65,12 +82,12 @@ export default function Profile() {
   };
 
   const handleSavedata = () => {
-    // your update logic here…
+    alert("Profile Update", "This function is under development.");
   };
 
   return (
     <SafeAreaProvider>
-      <PaperProvider>
+      <PaperProvider theme={customTheme}>
         <View style={styles.container}>
           <View style={styles.profileInfo}>
             <Avatar.Text
@@ -81,7 +98,10 @@ export default function Profile() {
             <Text style={styles.userEmail}>{profile.email}</Text>
           </View>
 
-          <Text style={styles.welcomeText}>Update Your Details 👋</Text>
+          <Text style={styles.welcomeText}>Update Your Details 🧩</Text>
+          <Text style={styles.subtitle}>
+            Remember your new password and email
+          </Text>
           <View style={styles.form}>
             <TextInput
               label="Username"
@@ -89,6 +109,7 @@ export default function Profile() {
               onChangeText={setupusername}
               mode="outlined"
               style={styles.input}
+              theme={customTheme}
             />
             <TextInput
               label="User Email"
@@ -96,6 +117,8 @@ export default function Profile() {
               onChangeText={setupemail}
               mode="outlined"
               style={styles.input}
+              theme={customTheme}
+              keyboardType="email-address"
             />
             <TextInput
               label="User Password"
@@ -103,13 +126,17 @@ export default function Profile() {
               onChangeText={setuppassword}
               mode="outlined"
               style={styles.input}
+              theme={customTheme}
+              secureTextEntry
             />
             <TextInput
-              label="User Password confirmation"
+              label="Confirm Password"
               value={uppasswordconfirm}
               onChangeText={setuppasswordconfirm}
               mode="outlined"
               style={styles.input}
+              theme={customTheme}
+              secureTextEntry
             />
             <Button
               mode="contained"
@@ -172,17 +199,25 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    marginBottom: 10,
-    borderRadius: 20,
+    marginBottom: 12,
+    borderRadius: 18,
+    backgroundColor: "#f9f9ff",
+    fontFamily: "outfit-regular",
   },
   updateButton: {
     borderRadius: 30,
-    marginTop: 5,
+    marginTop: 10,
   },
   logoutButton: {
-    marginTop: 60,
+    marginTop: 40,
     width: "100%",
     borderRadius: 30,
     backgroundColor: "#dc143c",
+  },
+  subtitle: {
+    fontSize: 16,
+    fontFamily: "outfit-light",
+    color: "#3b2a2a",
+    marginTop: 5,
   },
 });
