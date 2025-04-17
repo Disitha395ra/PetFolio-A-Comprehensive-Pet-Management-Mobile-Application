@@ -5,7 +5,7 @@ import { PaperProvider, Avatar, Button } from "react-native-paper";
 import { useFonts } from "expo-font";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
-import { useContext, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 
 export default function Profile() {
   const { user } = useContext(UserContext); // globally stored username
@@ -20,7 +20,7 @@ export default function Profile() {
   if (!fontsLoaded) return null;
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/auth/profile", {
+    fetch("http://localhost:8080/api/user/profile", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export default function Profile() {
               label={user?.charAt(0).toUpperCase() || "G"}
             />
             <Text style={styles.userName}>{profile.username}</Text>
-            <Text style={styles.userEmail}>{profile.,email}</Text>
+            <Text style={styles.userEmail}>{profile.email}</Text>
           </View>
 
           <Button
