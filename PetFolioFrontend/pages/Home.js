@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#e6ecff",
-    alignItems: "flex-start", // align items to the left
+    alignItems: "flex-start", 
     paddingHorizontal: 30,
-    paddingTop: 60, // create space from top
+    paddingTop: 50, 
   },
   welcomeText: {
     fontSize: 26,
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
   },
   welcomemsg: {
-    alignSelf: "flex-start", // make sure it's aligned to the left
+    alignSelf: "flex-start", 
     marginBottom: 20,
   },
 });
