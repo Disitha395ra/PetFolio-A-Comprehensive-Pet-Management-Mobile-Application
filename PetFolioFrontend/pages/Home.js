@@ -107,19 +107,16 @@ export default function Home() {
               <Text style={styles.subtitle}>Fetching your pets...</Text>
             </View>
           ) : pets.length === 0 ? (
-            
             <View>
-              <Text style={styles.subtitle}>No pets found.</Text>
               <Image
                 source={require("../assets/loading.gif")}
                 style={styles.loadingGif}
                 resizeMode="contain"
               />
               <Text style={styles.subtitle}>
-                Add a new pet by clicking the button below.</Text>
+                Add a new pet by clicking the button below.
+              </Text>
             </View>
-            
-            
           ) : (
             <ScrollView style={{ width: "100%" }}>
               {pets.map((pet) => (
@@ -150,7 +147,6 @@ export default function Home() {
             </ScrollView>
           )}
 
-          {/* Add Pet Modal */}
           <Portal>
             <Modal
               visible={visible}
@@ -199,6 +195,7 @@ export default function Home() {
                   mode="contained"
                   style={styles.addpetButton}
                   onPress={addnewpet}
+                  labelStyle={{ color: "#ffffff" }}
                 >
                   Add Pet
                 </Button>
