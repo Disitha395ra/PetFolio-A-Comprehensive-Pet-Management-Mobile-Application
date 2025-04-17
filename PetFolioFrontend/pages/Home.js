@@ -17,6 +17,17 @@ export default function Home() {
     "outfit-regular": require("../assets/fonts/Outfit-Regular.ttf"),
     "outfit-light": require("../assets/fonts/Outfit-Light.ttf"),
   });
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/pets/profile", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => setPets(data))
+      .catch((error) => console.error("Error fetching pets:", error));
+  }, []);
+
   if (!fontsLoaded) return null;
 
 
@@ -29,19 +40,31 @@ export default function Home() {
             <Text style={styles.subtitle}>Welcome to petfolio</Text>
           </View>
           <View>
-            <Card>
-              <Card.Title
-                title="Card Title"
-              />
-              <Card.Cover
-                source={{
-                  uri: "https://picsum.photos/700",
-                }}
-              />
-              <Card.Actions>
-                <Button>Delete Pet</Button>
-              </Card.Actions>
-            </Card>
+            {pets.map((pet) => (
+              <Card key={pet.petid} style={styles.card}>
+                <Card.Title
+                  title={pet.petname}
+                  subtitle={`Owner: ${pet.username}`}
+                />
+                <Card.Cover
+                  source={{ uri: pet.photo || "https://picsum.photos/700" }}
+                />
+                <Card.Content>
+                  <Text>Age: {pet.petage}</Text>
+                  <Text>Gender: {pet.gender}</Text>
+                  <Text>Birthdate: {pet.birthdate}</Text>
+                </Card.Content>
+                <Card.Actions>
+                  <Button
+                    onPress={() => {
+                      /* delete logic here */
+                    }}
+                  >
+                    Delete Pet
+                  </Button>
+                </Card.Actions>
+              </Card>
+            ))}
           </View>
 
           <TouchableOpacity style={styles.addButton}>
