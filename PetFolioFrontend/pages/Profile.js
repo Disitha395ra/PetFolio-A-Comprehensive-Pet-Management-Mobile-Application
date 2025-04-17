@@ -11,6 +11,8 @@ export default function Profile() {
   const [profile, setProfile] = useState(null);
   const [upusername, setupusername] = useState("");
   const [upemail, setupemail] = useState("");
+  const [uppassword, setuppassword] = useState("");
+  const [uppasswordconfirm, setuppasswordconfirm] = useState("");
   const navigation = useNavigation();
 
   let [fontsLoaded] = useFonts({
@@ -95,6 +97,20 @@ export default function Profile() {
               mode="outlined"
               style={styles.input}
             />
+            <TextInput
+              label="User Password"
+              value={uppassword}
+              onChangeText={setuppassword}
+              mode="outlined"
+              style={styles.input}
+            />
+            <TextInput
+              label="User Password confirmation"
+              value={uppasswordconfirm}
+              onChangeText={setuppasswordconfirm}
+              mode="outlined"
+              style={styles.input}
+            />
             <Button
               mode="contained"
               style={styles.updateButton}
@@ -110,7 +126,7 @@ export default function Profile() {
             mode="contained"
             style={styles.logoutButton}
             onPress={handleLogout}
-            buttonColor="#3b2a2a"
+            buttonColor="#dc143c"
             textColor="#fff"
           >
             Logout
@@ -157,14 +173,16 @@ const styles = StyleSheet.create({
   },
   input: {
     marginBottom: 10,
+    borderRadius: 20,
   },
   updateButton: {
     borderRadius: 30,
     marginTop: 5,
   },
   logoutButton: {
-    marginTop: 20,
-    width: "60%",
+    marginTop: 60,
+    width: "100%",
     borderRadius: 30,
+    backgroundColor: "#dc143c",
   },
 });
