@@ -4,7 +4,7 @@ import { PaperProvider } from "react-native-paper";
 import { useFonts } from "expo-font";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
-import { Avatar } from "react-native-paper";
+import { Avatar, Modal, Portal } from "react-native-paper";
 import { Card, Button } from "react-native-paper";
 import React, { useContext, useEffect, useState } from "react";
 
@@ -34,6 +34,12 @@ export default function Home() {
 
   if (!fontsLoaded) return null;
 
+
+   const [visible, setVisible] = React.useState(false);
+
+   const showModal = () => setVisible(true);
+   const hideModal = () => setVisible(false);
+   const containerStyle = { backgroundColor: "white", padding: 20 };
 
   return (
     <SafeAreaProvider>
@@ -71,7 +77,17 @@ export default function Home() {
             ))}
           </View>
 
-          <TouchableOpacity style={styles.addButton}>
+          <Portal>
+            <Modal
+              visible={visible}
+              onDismiss={hideModal}
+              contentContainerStyle={containerStyle}
+            >
+              <Text>Example Modal. Click outside this area to dismiss.</Text>
+            </Modal>
+          </Portal>
+
+          <TouchableOpacity style={styles.addButton} onPress={showModal}>
             <Avatar.Icon size={45} icon="plus" />
           </TouchableOpacity>
         </View>
