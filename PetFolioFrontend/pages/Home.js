@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
@@ -7,10 +6,13 @@ import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import { Avatar } from "react-native-paper";
 import { Card, Button } from "react-native-paper";
+import React, { useContext, useEffect, useState } from "react";
 
 export default function Home() {
-  const { user, setUser } = useContext(UserContext);
   const navigation = useNavigation();
+
+  const { user } = useContext(UserContext); // Assuming 'user' is the username
+  const [pets, setPets] = useState([]);
 
   let [fontsLoaded] = useFonts({
     "outfit-bold": require("../assets/fonts/Outfit-Bold.ttf"),
@@ -18,15 +20,17 @@ export default function Home() {
     "outfit-light": require("../assets/fonts/Outfit-Light.ttf"),
   });
 
-  useEffect(() => {
-    fetch("http://localhost:8080/api/pets/profile", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((data) => setPets(data))
-      .catch((error) => console.error("Error fetching pets:", error));
-  }, []);
+   useEffect(() => {
+     if (user) {
+       fetch(`http://localhost:8080/api/pets/profile?username=${user}`, {
+         method: "GET",
+         headers: { "Content-Type": "application/json" },
+       })
+         .then((res) => res.json())
+         .then((data) => setPets(data))
+         .catch((error) => console.error("Error fetching pets:", error));
+     }
+   }, [user]);
 
   if (!fontsLoaded) return null;
 
