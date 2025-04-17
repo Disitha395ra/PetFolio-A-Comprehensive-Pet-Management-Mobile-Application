@@ -1,15 +1,16 @@
-import React, { useContext } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { PaperProvider, Avatar, Button } from "react-native-paper";
+import { PaperProvider, Avatar, Button, TextInput } from "react-native-paper";
 import { useFonts } from "expo-font";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
-import {  useEffect, useState } from "react";
 
 export default function Profile() {
-  const { user } = useContext(UserContext); // globally stored username
+  const { user, setUser } = useContext(UserContext); // <-- destructure both here
   const [profile, setProfile] = useState(null);
+  const [upusername, setupusername] = useState("");
+  const [upemail, setupemail] = useState("");
   const navigation = useNavigation();
 
   let [fontsLoaded] = useFonts({
@@ -22,21 +23,25 @@ export default function Profile() {
   useEffect(() => {
     fetch("http://localhost:8080/api/user/profile", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: user }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        setProfile(data);
-      })
-      .catch((err) => {
-        console.log("Error loading profile:", err);
-      });
+      .then((data) => setProfile(data))
+      .catch((err) => console.log("Error loading profile:", err));
   }, [user]);
 
-  if (!profile) return <Text>Loading...</Text>;
+  if (!profile) {
+    return (
+      <SafeAreaProvider>
+        <PaperProvider>
+          <View style={styles.container}>
+            <Text>Loading...</Text>
+          </View>
+        </PaperProvider>
+      </SafeAreaProvider>
+    );
+  }
 
   const handleLogout = () => {
     Alert.alert(
@@ -48,13 +53,17 @@ export default function Profile() {
           text: "Logout",
           style: "destructive",
           onPress: () => {
-            setUser(null);
-            navigation.navigate("Login"); 
+            setUser(null); // now defined!
+            navigation.navigate("Login");
           },
         },
       ],
       { cancelable: true }
     );
+  };
+
+  const handleSavedata = () => {
+    // your update logic here…
   };
 
   return (
@@ -64,10 +73,37 @@ export default function Profile() {
           <View style={styles.profileInfo}>
             <Avatar.Text
               size={80}
-              label={user?.charAt(0).toUpperCase() || "G"}
+              label={profile.username.charAt(0).toUpperCase()}
             />
             <Text style={styles.userName}>{profile.username}</Text>
             <Text style={styles.userEmail}>{profile.email}</Text>
+          </View>
+
+          <Text style={styles.welcomeText}>Update Your Details 👋</Text>
+          <View style={styles.form}>
+            <TextInput
+              label="Username"
+              value={upusername}
+              onChangeText={setupusername}
+              mode="outlined"
+              style={styles.input}
+            />
+            <TextInput
+              label="User Email"
+              value={upemail}
+              onChangeText={setupemail}
+              mode="outlined"
+              style={styles.input}
+            />
+            <Button
+              mode="contained"
+              style={styles.updateButton}
+              onPress={handleSavedata}
+              buttonColor="#3b2a2a"
+              textColor="#fff"
+            >
+              Update Details
+            </Button>
           </View>
 
           <Button
@@ -107,6 +143,23 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "outfit-light",
     color: "#3b2a2a",
+    marginTop: 5,
+  },
+  welcomeText: {
+    fontSize: 18,
+    fontFamily: "outfit-bold",
+    color: "#3b2a2a",
+    marginBottom: 10,
+  },
+  form: {
+    width: "100%",
+    marginBottom: 20,
+  },
+  input: {
+    marginBottom: 10,
+  },
+  updateButton: {
+    borderRadius: 30,
     marginTop: 5,
   },
   logoutButton: {
