@@ -19,7 +19,7 @@ import {
 import { useFonts } from "expo-font";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
-import  { useContext, useEffect, useState } from "react";
+import  React, { useContext, useEffect, useState } from "react";
 
 export default function Home() {
   const navigation = useNavigation();
@@ -104,14 +104,13 @@ export default function Home() {
 
           {loading ? (
             <View style={styles.loaderContainer}>
-              <Image
-                source={require("../assets/loading.gif")}
-                style={styles.loadingGif}
-              />
               <Text style={styles.subtitle}>Fetching your pets...</Text>
             </View>
           ) : pets.length === 0 ? (
-            <Text style={styles.subtitle}>No pets found. Add a new one!</Text>
+            <Image
+              source={require("../assets/loading.gif")}
+              style={styles.loadingGif}
+            />
           ) : (
             <ScrollView style={{ width: "100%" }}>
               {pets.map((pet) => (
@@ -250,6 +249,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     marginTop: 10,
     backgroundColor: "#3b2a2a",
+    color: "#fff",
   },
   loaderContainer: {
     flex: 1,
@@ -258,8 +258,10 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   loadingGif: {
-    width: 150,
-    height: 150,
+    width: 300,
+    height: 350,
     marginBottom: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
