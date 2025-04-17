@@ -5,9 +5,11 @@ import { PaperProvider, Avatar, Button } from "react-native-paper";
 import { useFonts } from "expo-font";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
+import { useContext, useEffect, useState } from "react";
 
 export default function Profile() {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext); // globally stored username
+  const [profile, setProfile] = useState(null);
   const navigation = useNavigation();
 
   let [fontsLoaded] = useFonts({
@@ -16,6 +18,25 @@ export default function Profile() {
     "outfit-light": require("../assets/fonts/Outfit-Light.ttf"),
   });
   if (!fontsLoaded) return null;
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/auth/profile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: user }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setProfile(data);
+      })
+      .catch((err) => {
+        console.log("Error loading profile:", err);
+      });
+  }, [user]);
+
+  if (!profile) return <Text>Loading...</Text>;
 
   const handleLogout = () => {
     Alert.alert(
@@ -45,8 +66,8 @@ export default function Profile() {
               size={80}
               label={user?.charAt(0).toUpperCase() || "G"}
             />
-            <Text style={styles.userName}>{user || "Guest"}</Text>
-            <Text style={styles.userEmail}>user@example.com</Text>
+            <Text style={styles.userName}>{profile.username}</Text>
+            <Text style={styles.userEmail}>{profile.,email}</Text>
           </View>
 
           <Button
