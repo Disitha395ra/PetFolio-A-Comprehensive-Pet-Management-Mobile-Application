@@ -4,7 +4,8 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ScrollView,
+  FlatList,
+  Dimensions,
 } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import {
@@ -19,14 +20,14 @@ import {
 import { useFonts } from "expo-font";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
-import  React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 export default function Home() {
   const navigation = useNavigation();
-  const { user } = useContext(UserContext); 
+  const { user } = useContext(UserContext);
 
   const [pets, setPets] = useState([]);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   let [fontsLoaded] = useFonts({
     "outfit-bold": require("../assets/fonts/Outfit-Bold.ttf"),
@@ -65,7 +66,6 @@ export default function Home() {
   const [petgender, setpetgender] = useState("");
   const [petbirthdate, setpetbirthdate] = useState("");
   const [petdescription, setpetdescription] = useState("");
-  const [petphoto, setpetphoto] = useState("");
 
   const addnewpet = () => {
     fetch("http://localhost:8080/api/pets/add", {
@@ -93,6 +93,29 @@ export default function Home() {
       .catch((error) => console.error("Error adding pet:", error));
   };
 
+  const screenWidth = Dimensions.get("window").width;
+
+  const renderPetCard = ({ item: pet }) => (
+    <Card style={[styles.card, { width: screenWidth / 2 - 40 }]}>
+      <Card.Title title={pet.petname} subtitle={`Owner: ${pet.username}`} />
+      <Card.Cover source={{ uri: pet.photo || "https://picsum.photos/700" }} />
+      <Card.Content>
+        <Text>Age: {pet.petage}</Text>
+        <Text>Gender: {pet.gender}</Text>
+        <Text>Birthdate: {pet.birthdate}</Text>
+      </Card.Content>
+      <Card.Actions>
+        <Button
+          onPress={() => {
+            // Delete logic goes here
+          }}
+        >
+          Delete Pet
+        </Button>
+      </Card.Actions>
+    </Card>
+  );
+
   return (
     <SafeAreaProvider>
       <PaperProvider>
@@ -118,33 +141,14 @@ export default function Home() {
               </Text>
             </View>
           ) : (
-            <ScrollView style={{ width: "100%" }}>
-              {pets.map((pet) => (
-                <Card key={pet.petid} style={styles.card}>
-                  <Card.Title
-                    title={pet.petname}
-                    subtitle={`Owner: ${pet.username}`}
-                  />
-                  <Card.Cover
-                    source={{ uri: pet.photo || "https://picsum.photos/700" }}
-                  />
-                  <Card.Content>
-                    <Text>Age: {pet.petage}</Text>
-                    <Text>Gender: {pet.gender}</Text>
-                    <Text>Birthdate: {pet.birthdate}</Text>
-                  </Card.Content>
-                  <Card.Actions>
-                    <Button
-                      onPress={() => {
-                        // delete logic
-                      }}
-                    >
-                      Delete Pet
-                    </Button>
-                  </Card.Actions>
-                </Card>
-              ))}
-            </ScrollView>
+            <FlatList
+              data={pets}
+              renderItem={renderPetCard}
+              keyExtractor={(item) => item.petid.toString()}
+              numColumns={2}
+              columnWrapperStyle={{ justifyContent: "space-between" }}
+              contentContainerStyle={{ paddingBottom: 100 }}
+            />
           )}
 
           <Portal>
@@ -203,7 +207,6 @@ export default function Home() {
             </Modal>
           </Portal>
 
-          {/* Floating Button to Show Modal */}
           <TouchableOpacity style={styles.addButton} onPress={showModal}>
             <Avatar.Icon size={45} icon="plus" />
           </TouchableOpacity>
@@ -217,8 +220,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#e6ecff",
-    alignItems: "flex-start",
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
     paddingTop: 50,
   },
   welcomeText: {
@@ -239,9 +241,9 @@ const styles = StyleSheet.create({
     bottom: 30,
     right: 30,
     shadowColor: "#000",
+    backgroundColor: "#fff",
   },
   welcomemsg: {
-    alignSelf: "flex-start",
     marginBottom: 20,
   },
   input: {
@@ -249,13 +251,11 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     backgroundColor: "#f9f9ff",
     fontFamily: "outfit-regular",
-    color: "#3b2a2a",
   },
   addpetButton: {
     borderRadius: 30,
     marginTop: 10,
     backgroundColor: "#3b2a2a",
-    color: "#fff",
   },
   loaderContainer: {
     flex: 1,
@@ -267,7 +267,12 @@ const styles = StyleSheet.create({
     width: 300,
     height: 350,
     marginBottom: 10,
-    alignItems: "center",
-    justifyContent: "center",
+    alignSelf: "center",
+  },
+  card: {
+    marginBottom: 20,
+    borderRadius: 20,
+    backgroundColor: "#fffaf0",
+    elevation: 4,
   },
 });
