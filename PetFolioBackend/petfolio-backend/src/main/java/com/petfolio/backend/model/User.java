@@ -17,10 +17,6 @@ public class User {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Pet> pets;
-
     public User() {}
 
     // Getters and setters...
@@ -41,13 +37,22 @@ public class User {
         this.username = username;
     }
 
-    public List<Pet> getPets() {
-        return pets;
-    }
 
-    public void setPets(List<Pet> pets) {
-        this.pets = pets;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    // Add email, password getters/setters as needed
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+    
 }
