@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PetController { 
 
     @GetMapping("/profile")
-    public ResponseEntity<?> getUserProfile(@RequestParam String username) {
+    public ResponseEntity<?> getPetProfile(@RequestParam String username) {
 
         String dbUrl = "jdbc:mysql://localhost:3306/petfolio";
         String dbUsername = "root";

@@ -11,7 +11,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userid;
+    private int id;
 
     private String username;
     private String email;
@@ -22,11 +22,11 @@ public class User {
     // Getters and setters...
 
     public int getUserid() {
-        return userid;
+        return id;
     }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
+    public void setUserid(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
