@@ -33,13 +33,17 @@ public class AuthController {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
 			String sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+			String sql1 = "INSERT INTO userspets (username) VALUES (?)";
 			
 			PreparedStatement stmt = conn.prepareStatement(sql);
+			PreparedStatement stmt1 = conn.prepareStatement(sql1);
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
+            stmt1.setString(1,  user.getUsername());
             
             stmt.executeUpdate();
+            stmt1.executeUpdate();
 
             return "User registered successfully";
 		}catch(Exception e) {
