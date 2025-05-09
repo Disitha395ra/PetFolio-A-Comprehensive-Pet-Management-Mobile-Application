@@ -36,17 +36,24 @@ export default function Home() {
   });
 
   useEffect(() => {
+    console.log(1);
     if (user) {
+      console.log(2);
+
       setLoading(true);
       fetch(`http://localhost:8080/api/pets/profile?username=${user}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       })
         .then((res) => res.json())
-        .then((data) => setPets(data))
+        .then((data) => {
+          console.log(data);
+          setPets(data);
+        })
         .catch((error) => console.error("Error fetching pets:", error))
         .finally(() => setLoading(false));
     }
+    console.log(3);
   }, [user]);
 
   if (!fontsLoaded) return null;
@@ -141,14 +148,7 @@ export default function Home() {
               </Text>
             </View>
           ) : (
-            <FlatList
-              data={pets}
-              renderItem={renderPetCard}
-              keyExtractor={(item) => item.petid.toString()}
-              numColumns={2}
-              columnWrapperStyle={{ justifyContent: "space-between" }}
-              contentContainerStyle={{ paddingBottom: 100 }}
-            />
+            <View>data={pets}</View>
           )}
 
           <Portal>
