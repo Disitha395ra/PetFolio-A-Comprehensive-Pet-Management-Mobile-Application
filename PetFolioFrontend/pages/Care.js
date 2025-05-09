@@ -219,7 +219,7 @@ export default function Care() {
         {reminders.length === 0 ? (
           <View style={styles.emptyStateContainer}>
             <Image
-              source={require("../assets/loading.gif")}
+              source={require("../assets/loadcare.gif")}
               style={styles.emptyStateImage}
               resizeMode="contain"
             />
