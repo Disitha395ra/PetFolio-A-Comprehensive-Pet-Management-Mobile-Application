@@ -71,7 +71,7 @@ export default function Home() {
   const [petname, setpetname] = useState("");
   const [petage, setpetage] = useState("");
   const [petgender, setpetgender] = useState("");
-  const [petbirthdate, setpetbirthdate] = useState("");
+  const [petbirthday, setpetbirthday] = useState("");
   const [petdescription, setpetdescription] = useState("");
 
   const addnewpet = () => {
@@ -83,17 +83,17 @@ export default function Home() {
         petname,
         petage,
         petgender,
-        petbirthdate,
+        petbirthday,
         petdescription,
       }),
     })
-      .then((res) => res.json())
+      .then((res) => res.text())
       .then((data) => {
-        setPets((prevPets) => [...prevPets, data]);
+        //setPets((prevPets) => [...prevPets, data]);
         setpetname("");
         setpetage("");
         setpetgender("");
-        setpetbirthdate("");
+        setpetbirthday("");
         setpetdescription("");
         hideModal();
       })
@@ -148,7 +148,14 @@ export default function Home() {
               </Text>
             </View>
           ) : (
-            <View>data={pets}</View>
+            <FlatList
+              data={pets}
+              renderItem={renderPetCard}
+              keyExtractor={(item) => item.petid.toString()}
+              numColumns={2}
+              columnWrapperStyle={{ justifyContent: "space-between" }}
+              contentContainerStyle={{ paddingBottom: 100 }}
+            />
           )}
 
           <Portal>
@@ -183,8 +190,8 @@ export default function Home() {
                 />
                 <TextInput
                   label="Pet Birthdate"
-                  value={petbirthdate}
-                  onChangeText={setpetbirthdate}
+                  value={petbirthday}
+                  onChangeText={setpetbirthday}
                   mode="outlined"
                   style={styles.input}
                 />
