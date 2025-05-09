@@ -79,19 +79,24 @@ export default function Care() {
 
   const addReminder = () => {
     if (!description.trim()) return;
-
-    const newReminder = {
-      id: Date.now(),
-      date: selectedDate,
-      description,
-      time,
-      completed: false,
-    };
-
-    setReminders([...reminders, newReminder]);
-    setDescription("");
-    setTime("12:00");
-    setModalVisible(false);
+    if (!selectedDate) return;
+    fetch(`http://localhost:8080/api/reminder/addreminder?username=${user}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: user,
+        description,
+        time,
+        date: selectedDate,
+      }),
+    })
+      .then((res) => res.text())
+      .then((data) => {
+        setDescription("");
+        setTime("12:00");
+        setModalVisible(false);
+      })
+      .catch((error) => console.error("Error adding reminder:", error));
   };
 
   const editReminder = () => {
