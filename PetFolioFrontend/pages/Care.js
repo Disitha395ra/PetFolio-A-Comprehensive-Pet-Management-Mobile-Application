@@ -143,7 +143,23 @@ export default function Care() {
 
   // Group reminders by date for the list view
   const groupedReminders = ()=>{
-
+    fetch(`http://localhost:8080/api/reminder/getreminder`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: user,
+        description,
+        time,
+        date: selectedDate,
+      }),
+    })
+      .then((res) => res.text())
+      .then((data) => {
+        setDescription("");
+        setTime("12:00");
+        setModalVisible(false);
+      })
+      .catch((error) => console.error("Error adding reminder:", error));
   }
 
   // Sort dates in descending order
