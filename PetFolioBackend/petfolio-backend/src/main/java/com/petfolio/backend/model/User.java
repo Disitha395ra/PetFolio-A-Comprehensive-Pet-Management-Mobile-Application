@@ -19,7 +19,6 @@ public class User {
 
     public User() {}
 
-    // Getters and setters...
 
     public int getUserid() {
         return id;
