@@ -16,6 +16,9 @@ import { Calendar } from "react-native-calendars";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { UserContext } from "../contexts/UserContext";
+import { useContext } from "react";
+import { useFonts } from "expo-font";
 
 export default function Care() {
   const [selectedDate, setSelectedDate] = useState("");
@@ -27,6 +30,8 @@ export default function Care() {
   const [currentReminder, setCurrentReminder] = useState(null);
   const [markedDates, setMarkedDates] = useState({});
   const [animation] = useState(new Animated.Value(0));
+
+  const { user } = useContext(UserContext);
 
   // Animation effect when component mounts
   useEffect(() => {
@@ -151,7 +156,7 @@ export default function Care() {
 
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Pet Care Calendar</Text>
+        <Text style={styles.headerTitle}>{user}'s Pet Care Calendar</Text>
         <Text style={styles.headerSubtitle}>
           Track your pet's care routines and appointments
         </Text>
