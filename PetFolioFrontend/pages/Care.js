@@ -142,13 +142,9 @@ export default function Care() {
   );
 
   // Group reminders by date for the list view
-  const groupedReminders = reminders.reduce((acc, reminder) => {
-    if (!acc[reminder.date]) {
-      acc[reminder.date] = [];
-    }
-    acc[reminder.date].push(reminder);
-    return acc;
-  }, {});
+  const groupedReminders = ()=>{
+
+  }
 
   // Sort dates in descending order
   const sortedDates = Object.keys(groupedReminders).sort(
