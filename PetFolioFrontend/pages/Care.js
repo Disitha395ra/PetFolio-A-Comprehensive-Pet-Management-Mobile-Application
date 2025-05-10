@@ -143,12 +143,11 @@ export default function Care() {
 
   // Group reminders by date for the list view
   const groupedReminders = ()=>{
-    fetch(`http://localhost:8080/api/reminder/getreminder`, {
+    fetch(`http://localhost:8080/api/reminder/getreminder?username=${user}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-      
     })
-      .then((res) => res.text())
+      .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setReminders(data);
