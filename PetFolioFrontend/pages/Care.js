@@ -146,20 +146,14 @@ export default function Care() {
     fetch(`http://localhost:8080/api/reminder/getreminder`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: user,
-        description,
-        time,
-        date: selectedDate,
-      }),
+      
     })
       .then((res) => res.text())
       .then((data) => {
-        setDescription("");
-        setTime("12:00");
-        setModalVisible(false);
+        console.log(data);
+        setReminders(data);
       })
-      .catch((error) => console.error("Error adding reminder:", error));
+      .catch((error) => console.error("Error fetching reminders:", error));
   }
 
   // Sort dates in descending order
