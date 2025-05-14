@@ -54,13 +54,13 @@ public class RemindersController {
 		}
 	}
 	
-	@GetMapping("/getreminderr")
+	@GetMapping("/getreminder")
 	public ResponseEntity<?> getPetreminders(@RequestParam String username) {
 	    String dbUrl = "jdbc:mysql://localhost:3306/petfolio";
 	    String dbUsername = "root";
 	    String dbPassword = "";
 
-	    List<Map<String, Object>> reminders = new ArrayList<>();
+	    StringBuilder output = new StringBuilder();
 
 	    try {
 	        Class.forName("com.mysql.cj.jdbc.Driver");
@@ -73,20 +73,23 @@ public class RemindersController {
 	        ResultSet rs = stmt.executeQuery();
 
 	        while (rs.next()) {
-	            Map<String, Object> reminder = new HashMap<>();
-	            reminder.put("id", rs.getInt("id"));
-	            reminder.put("username", rs.getString("username"));
-	            reminder.put("description", rs.getString("description")); 
-	            reminder.put("time", rs.getString("time"));   
-	            reminder.put("date", rs.getString("date")); 
-	            reminders.add(reminder);
+	            //output.append("ID: ").append(rs.getInt("id")).append(", ");
+	            output.append("Date: ").append(rs.getString("date")).append(", ");
+	            output.append("Description: ").append(rs.getString("description")).append(", ");
+	            output.append("Time: ").append(rs.getString("time")).append(", ");
+	            output.append("Username: ").append(rs.getString("username")).append("\n");
 	        }
 
 	        rs.close();
 	        stmt.close();
 	        conn.close();
 
-	        return ResponseEntity.ok(reminders);
+	        if (output.length() == 0) {
+	            return ResponseEntity.ok("No reminders found for username: " + username);
+	        }
+
+	        return ResponseEntity.ok(output.toString());
+
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return ResponseEntity.status(500).body("Reminders fetching error: " + e.getMessage());
