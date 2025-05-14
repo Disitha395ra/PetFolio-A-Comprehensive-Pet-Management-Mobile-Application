@@ -54,7 +54,7 @@ public class RemindersController {
 		}
 	}
 	
-	
+	@GetMapping("/getreminderr")
 	public ResponseEntity<?> getPetreminders(@RequestParam String username) {
 	    String dbUrl = "jdbc:mysql://localhost:3306/petfolio";
 	    String dbUsername = "root";
