@@ -3,7 +3,10 @@ package com.petfolio.backend.controller;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -52,28 +55,41 @@ public class RemindersController {
 	}
 	
 	
-	@GetMapping("/getreminder")
-    public ResponseEntity<?> getPetreminders(@RequestParam String username) {
-		String dbUrl = "jdbc:mysql://localhost:3306/petfolio";
-        String dbUsername = "root";
-        String dbPassword = "";
-        
-        try {
-        	Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
-            String sql = "SELECT * FROM reminders WHERE username=?";
+	public ResponseEntity<?> getPetreminders(@RequestParam String username) {
+	    String dbUrl = "jdbc:mysql://localhost:3306/petfolio";
+	    String dbUsername = "root";
+	    String dbPassword = "";
 
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            
-            stmt.setString(4, reminder.getDate());
-            
-            stmt.executeUpdate();
-            
-            return "Reminder Add Successfully";
-        }catch(Exception e) {
-        	e.printStackTrace();
-			return "Reminders fetching Error"+e.getMessage();
-        }
-		
+	    List<Map<String, Object>> reminders = new ArrayList<>();
+
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+	        String sql = "SELECT * FROM reminders WHERE username = ?";
+
+	        PreparedStatement stmt = conn.prepareStatement(sql);
+	        stmt.setString(1, username);
+
+	        ResultSet rs = stmt.executeQuery();
+
+	        while (rs.next()) {
+	            Map<String, Object> reminder = new HashMap<>();
+	            reminder.put("id", rs.getInt("id"));
+	            reminder.put("username", rs.getString("username"));
+	            reminder.put("description", rs.getString("description")); 
+	            reminder.put("time", rs.getString("time"));   
+	            reminder.put("date", rs.getString("date")); 
+	            reminders.add(reminder);
+	        }
+
+	        rs.close();
+	        stmt.close();
+	        conn.close();
+
+	        return ResponseEntity.ok(reminders);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(500).body("Reminders fetching error: " + e.getMessage());
+	    }
 	}
 }
