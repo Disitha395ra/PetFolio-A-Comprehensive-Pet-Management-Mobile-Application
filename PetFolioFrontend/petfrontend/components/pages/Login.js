@@ -24,7 +24,7 @@ export default function Login({ navigation }) {
       return;
     }
 
-    // Add your login logic here
+    
     console.log("Login attempt:", { username, password });
     Alert.alert("Success", "Login successful!");
 
@@ -84,7 +84,7 @@ export default function Login({ navigation }) {
 
             <View style={styles.footer}>
               <Text style={styles.footerText}>Don't have an account?</Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation?.replace("Register")}>
                 <Text style={styles.signUpText}>Sign Up</Text>
               </TouchableOpacity>
             </View>
