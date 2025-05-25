@@ -17,9 +17,8 @@ export default function Landscreen({ navigation }) {
   });
 
   useEffect(() => {
-    
     const timer = setTimeout(() => {
-      navigation?.replace("LoginScreen");
+      navigation?.replace("Login");
     }, 4000);
 
     return () => clearTimeout(timer);
@@ -51,7 +50,7 @@ export default function Landscreen({ navigation }) {
             </Text>
 
             <Text style={styles.highlight}>
-              Start building your pet's story today!🐾
+              Start building your pet's story today! 🐾
             </Text>
 
             <View style={styles.footer}>
@@ -73,7 +72,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 25,
+    paddingHorizontal: 15,
     paddingVertical: 50,
   },
   head: {
@@ -86,22 +85,10 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     marginVertical: 40,
-    backgroundColor: "#007ab0",
-    borderRadius: 100,
-    padding: 15,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 8,
   },
   gif: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 300,
+    height: 300,
   },
   subhead: {
     fontFamily: "Poppins_400Regular",
