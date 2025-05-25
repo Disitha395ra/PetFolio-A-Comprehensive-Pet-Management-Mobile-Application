@@ -22,7 +22,8 @@
     "react-native-paper": "^5.14.5",
     "react-native-safe-area-context": "5.4.0",
     "react-native-vector-icons": "^10.2.0",
-    "expo-linear-gradient": "~14.1.4"
+    "expo-linear-gradient": "~14.1.4",
+    "expo-image": "~2.1.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

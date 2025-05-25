@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Image, StatusBar } from "react-native";
+import { View, StatusBar } from "react-native";
 import { StyleSheet, Text } from "react-native";
 import {
   useFonts,
@@ -8,6 +8,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
+import { Image } from "expo-image";
 
 export default function Landscreen({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -50,7 +51,7 @@ export default function Landscreen({ navigation }) {
             </Text>
 
             <Text style={styles.highlight}>
-              Start building your pet's story today! 🐾
+              Start building your pet's story today!🐾
             </Text>
 
             <View style={styles.footer}>
@@ -66,7 +67,7 @@ export default function Landscreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#6C63FF",
+    backgroundColor: "#007ab0",
   },
   content: {
     flex: 1,
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     marginVertical: 40,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#007ab0",
     borderRadius: 100,
     padding: 15,
     shadowColor: "#000",
