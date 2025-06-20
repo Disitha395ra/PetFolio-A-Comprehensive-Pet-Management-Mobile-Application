@@ -31,8 +31,8 @@ export default function Register({ navigation }) {
     return emailRegex.test(email);
   };
 
-  const handleRegister = () => {
-    // Validation
+  const handleRegister = async () => {
+    // 1. Validation
     if (
       !username.trim() ||
       !email.trim() ||
@@ -58,12 +58,32 @@ export default function Register({ navigation }) {
       return;
     }
 
-    // Add your registration logic here
-    console.log("Register attempt:", { username, email, password });
-    Alert.alert("Success", "Account created successfully!");
+    // 2. Send POST request to backend
+    try {
+      const response = await fetch("http://192.168.8.147:8080/user/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          useremail: email, // Important: must match your `Users` model field
+          password: password,
+        }),
+      });
 
-    // Navigate to login or home screen after successful registration
-    // navigation?.replace("Login");
+      const result = await response.text(); // since backend returns plain text
+
+      if (response.ok) {
+        Alert.alert("Success", result); // e.g., "User registered successfully!"
+        // navigation?.replace("Login"); // Navigate after success
+      } else {
+        Alert.alert("Registration Failed", result || "Something went wrong");
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      Alert.alert("Error", "Failed to connect to the server.");
+    }
   };
 
   if (!fontsLoaded) {
