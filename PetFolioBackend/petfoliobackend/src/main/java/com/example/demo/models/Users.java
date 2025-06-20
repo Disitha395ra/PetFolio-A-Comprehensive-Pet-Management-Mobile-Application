@@ -15,13 +15,7 @@ public class Users {
 	private String username;
 	private String useremail;
 	private String password;
-	public Users(int userId, String username, String useremail, String password) {
-		super();
-		this.userId = userId;
-		this.username = username;
-		this.useremail = useremail;
-		this.password = password;
-	}
+	
 	public int getUserId() {
 		return userId;
 	}
