@@ -60,7 +60,7 @@ export default function Register({ navigation }) {
 
     // 2. Send POST request to backend
     try {
-      const response = await fetch("http://192.168.8.147:8080/user/register", {
+      const response = await fetch("http://localhost:8080/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
