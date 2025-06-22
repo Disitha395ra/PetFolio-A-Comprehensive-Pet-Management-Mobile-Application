@@ -8,6 +8,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
+import axios from "axios";
 
 export default function Login({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -25,7 +26,7 @@ export default function Login({ navigation }) {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/user/login", {
+      const response = await fetch("http://192.168.8.147:8080/user/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

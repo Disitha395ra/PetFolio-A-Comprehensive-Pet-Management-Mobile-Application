@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
+  Pressable,
 } from "react-native";
 import { StyleSheet, Text, TextInput } from "react-native";
 import {
@@ -14,6 +15,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
+import axios from "axios";
 
 export default function Register({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -32,58 +34,7 @@ export default function Register({ navigation }) {
   };
 
   const handleRegister = async () => {
-    // 1. Validation
-    if (
-      !username.trim() ||
-      !email.trim() ||
-      !password.trim() ||
-      !confirmPassword.trim()
-    ) {
-      Alert.alert("Error", "Please fill in all fields");
-      return;
-    }
-
-    if (!validateEmail(email)) {
-      Alert.alert("Error", "Please enter a valid email address");
-      return;
-    }
-
-    if (password.length < 6) {
-      Alert.alert("Error", "Password must be at least 6 characters long");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      Alert.alert("Error", "Passwords do not match");
-      return;
-    }
-
-    // 2. Send POST request to backend
-    try {
-      const response = await fetch("http://localhost:8080/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: username,
-          useremail: email, // Important: must match your `Users` model field
-          password: password,
-        }),
-      });
-
-      const result = await response.text(); // since backend returns plain text
-
-      if (response.ok) {
-        Alert.alert("Success", result); // e.g., "User registered successfully!"
-        // navigation?.replace("Login"); // Navigate after success
-      } else {
-        Alert.alert("Registration Failed", result || "Something went wrong");
-      }
-    } catch (error) {
-      console.error("Registration error:", error);
-      Alert.alert("Error", "Failed to connect to the server.");
-    }
+    Alert.alert("Button Works", "You clicked Create Account");
   };
 
   if (!fontsLoaded) {
@@ -155,12 +106,12 @@ export default function Register({ navigation }) {
                   />
                 </View>
 
-                <TouchableOpacity
+                <Pressable
                   style={styles.registerButton}
                   onPress={handleRegister}
                 >
                   <Text style={styles.registerButtonText}>Create Account</Text>
-                </TouchableOpacity>
+                </Pressable>
               </View>
 
               <View style={styles.footer}>
