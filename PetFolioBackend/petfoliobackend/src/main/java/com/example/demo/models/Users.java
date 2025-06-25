@@ -15,6 +15,7 @@ public class Users {
 	private String username;
 	private String useremail;
 	private String password;
+	private String phone;
 	
 	public int getUserId() {
 		return userId;
@@ -39,6 +40,12 @@ public class Users {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 	

@@ -23,7 +23,6 @@ public class UserService {
         Users existinguser = userrepo.findByUseremailAndPassword(user.getUseremail(), user.getPassword());
 
         Map<String, String> response = new HashMap<>();
-
         if (existinguser != null) {
             response.put("message", "Login successful");
             response.put("username", existinguser.getUsername());
@@ -33,5 +32,25 @@ public class UserService {
         }
 
         return response;
+    }
+
+    public Map<String, String> updateUser(String username, Users updatedUser) {
+        Map<String, String> response = new HashMap<>();
+        Users existingUser = userrepo.findByUsername(username);
+
+        if (existingUser == null) {
+            response.put("error", "User not found");
+        } else {
+            existingUser.setUseremail(updatedUser.getUseremail());
+            existingUser.setPhone(updatedUser.getPhone());
+            userrepo.save(existingUser);
+            response.put("message", "User updated successfully");
+        }
+
+        return response;
+    }
+
+    public Users getUserByUsername(String username) {
+        return userrepo.findByUsername(username);
     }
 }
