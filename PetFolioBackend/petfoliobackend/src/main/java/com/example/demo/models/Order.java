@@ -1,4 +1,4 @@
-import javax.persistence.*;
+
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
