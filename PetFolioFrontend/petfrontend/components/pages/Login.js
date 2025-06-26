@@ -8,6 +8,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
+import axios from "axios";
 
 export default function Login({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -18,18 +19,37 @@ export default function Login({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!username.trim() || !password.trim()) {
       Alert.alert("Error", "Please fill in all fields");
       return;
     }
 
-    
-    console.log("Login attempt:", { username, password });
-    Alert.alert("Success", "Login successful!");
+    try {
+      const response = await fetch("http://192.168.8.147:8080/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          useremail: username, // Must match your Users model field
+          password: password,
+        }),
+      });
 
-    // Navigate to next screen after successful login
-    // navigation?.replace("HomeScreen");
+      const result = await response.text(); // Backend returns a plain String
+
+      if (response.ok && result === "Login successful!") {
+        Alert.alert("Success", result);
+        // Navigate to Home Screen
+        navigation?.replace("HomeScreen");
+      } else {
+        Alert.alert("Login Failed", result || "Invalid credentials");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      Alert.alert("Error", "Something went wrong. Please try again.");
+    }
   };
 
   if (!fontsLoaded) {

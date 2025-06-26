@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
+  Pressable,
 } from "react-native";
 import { StyleSheet, Text, TextInput } from "react-native";
 import {
@@ -14,6 +15,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { PaperProvider } from "react-native-paper";
+import axios from "axios";
 
 export default function Register({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -31,39 +33,8 @@ export default function Register({ navigation }) {
     return emailRegex.test(email);
   };
 
-  const handleRegister = () => {
-    // Validation
-    if (
-      !username.trim() ||
-      !email.trim() ||
-      !password.trim() ||
-      !confirmPassword.trim()
-    ) {
-      Alert.alert("Error", "Please fill in all fields");
-      return;
-    }
-
-    if (!validateEmail(email)) {
-      Alert.alert("Error", "Please enter a valid email address");
-      return;
-    }
-
-    if (password.length < 6) {
-      Alert.alert("Error", "Password must be at least 6 characters long");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      Alert.alert("Error", "Passwords do not match");
-      return;
-    }
-
-    // Add your registration logic here
-    console.log("Register attempt:", { username, email, password });
-    Alert.alert("Success", "Account created successfully!");
-
-    // Navigate to login or home screen after successful registration
-    // navigation?.replace("Login");
+  const handleRegister = async () => {
+    Alert.alert("Button Works", "You clicked Create Account");
   };
 
   if (!fontsLoaded) {
@@ -135,12 +106,12 @@ export default function Register({ navigation }) {
                   />
                 </View>
 
-                <TouchableOpacity
+                <Pressable
                   style={styles.registerButton}
                   onPress={handleRegister}
                 >
                   <Text style={styles.registerButtonText}>Create Account</Text>
-                </TouchableOpacity>
+                </Pressable>
               </View>
 
               <View style={styles.footer}>
